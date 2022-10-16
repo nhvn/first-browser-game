@@ -1,2 +1,2 @@
 # first-browser-game
-This game is similar the 'Mario' games where your main objective is to reach to your destination by jumping through obstacles and enemies without dying. 
+This game is similar the 'Mario' games where your main objective is to reach to your destination by jumping through obstacles and enemies without dying. My inspiration for this is that it gives me nostalgic memories from the days when games were much simpler. 
