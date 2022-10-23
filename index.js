@@ -1,5 +1,4 @@
-// import platform from '/img/Tile_02.png' // NOT SURE WHAT'S WRONG WITH THIS
-
+import platform from './img/Tile_02.png'
 console.log(platform)
 
 const canvas = document.querySelector('canvas')
@@ -47,29 +46,22 @@ class Platform {
         }
         this.width = 200
         this.height = 20
-
-        this.image = image
     }
     draw () { // Draws rectangle
-        c.drawImage(this.image, this.position.x, this.position.y) 
+        c.fillStyle = 'blue'
+        c.fillRect(this.position.x, 
+            this.position.y, 
+            this.width, 
+            this.height) 
     }
 }
 
-const image = new Image()
-image.src = platform
-
-console.log(image)
-
 const player = new Player()
 const platforms = [new Platform({
-    x: 200, 
-    y: 100,
-    image
+    x: 200, y: 100
 }), 
 new Platform({
-    x: 500, 
-    y: 200,
-    image
+    x: 500, y: 200
 })] 
 
 const keys = {
@@ -80,8 +72,6 @@ const keys = {
         pressed: false
     }
 }
-
-let scrollOffset = 0
 
 // Allows to maintain character shape
 function animate() {
@@ -101,19 +91,15 @@ function animate() {
     } else {
         player.velocity.x = 0
         if (keys.right.pressed) {
-        scrollOffset += 5
         platforms.forEach((platform) => {
             platform.position.x -= 5   // Allows platform to move as same rate as character
         })
         } else if (keys.left.pressed) {
-            scrollOffset -= 5
             platforms.forEach((platform) => {
             platform.position.x += 5  // Same as above but for left side
         })
         }
     }
-
-    console.log(scrollOffset)
 
 // Platform collision detection
 platforms.forEach((platform) => {
@@ -129,13 +115,10 @@ platforms.forEach((platform) => {
         player.position.x <= 
         platform.position.x + // Allows falling on right side
         platform.width
-        ){
+    ){
     player.velocity.y = 0
     }
-    })
-    if (scrollOffset > 2000) {
-        console.log('You Win!')
-    }
+})
 }
 
 animate()
