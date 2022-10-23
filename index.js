@@ -1,11 +1,11 @@
-import platform from './img/Tile_02.png'
-console.log(platform)
+import platform from './img/platform.png'
 
+console.log(platform)
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
-canvas.width = window.innerWidth // Sets window width from left to right
-canvas.height = window.innerHeight // Sets window height from top to bottom
+canvas.width = 1024 // Sets window width from left to right
+canvas.height = 576 // Sets window height from top to bottom
 
 const gravity = 0.5
 class Player {
@@ -39,29 +39,36 @@ class Player {
 }
 
 class Platform {
-    constructor({x, y}) {
+    constructor({ x, y, image }) {
         this.position = {
             x,
-            y
+            y,
         }
-        this.width = 200
-        this.height = 20
+        this.image = image
+        this.width = image.width
+        this.height = image.height 
+
+
     }
     draw () { // Draws rectangle
-        c.fillStyle = 'blue'
-        c.fillRect(this.position.x, 
-            this.position.y, 
-            this.width, 
-            this.height) 
+        c.drawImage(this.image, this.position.x, this.position.y)
+
     }
 }
 
+const image = new Image()
+image.src = platform
+
+console.log(image)
+
 const player = new Player()
 const platforms = [new Platform({
-    x: 200, y: 100
+    x: 0, 
+    y: 470,
+    image
 }), 
 new Platform({
-    x: 500, y: 200
+    x: image.width - 3, y: 470, image
 })] 
 
 const keys = {
@@ -76,11 +83,12 @@ const keys = {
 // Allows to maintain character shape
 function animate() {
     requestAnimationFrame(animate)
-    c.clearRect(0, 0, canvas.width, canvas.height) 
-    player.update()
+    c.fillStyle = 'white'
+    c.fillRect(0, 0, canvas.width, canvas.height) 
     platforms.forEach((platform) => {
         platform.draw()
     })
+    player.update()
 
     if (keys.right.pressed && 
         player.position.x < 400) {
