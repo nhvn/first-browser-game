@@ -54,7 +54,12 @@ class Player {
     
     update() {
         this.frames++
-        if (this.frames > 2) this.frames = 0 // Adds Idle bouncing (too fast) pt.2
+        if (this.frames > 1 && this.currentSprite === 
+            this.sprites.stand.right) 
+            this.frames = 0 // Adds Idle bouncing (too fast) pt.2
+        else if (this.frames > 4 && this.currentSprite === 
+            this.sprites.run.right)
+            this.frames = 0
         this.draw()
         this.position.y += this.velocity.y // These 2 are used to be added to for control movement
         this.position.x += this.velocity.x
@@ -289,6 +294,7 @@ addEventListener('keyup', ({ keyCode }) => { // This allows endless gravity to s
         case 68:
             console.log('right')
             keys.right.pressed = false
+            player.currentSprite = player.sprites.stand.right
             break
 
         case 87:
