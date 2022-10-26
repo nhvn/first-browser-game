@@ -1,6 +1,10 @@
 const background = document.querySelector('.myImg').src = './img/4_game_background.png'
 const platform = document.querySelector('.myImg').src = './img/platform.png'
-const ghosts = document.querySelector('.myImg').src = './img/Ghost1.png'
+const spider = document.querySelector('.myImg').src = './img/Spider2.png'
+const boo = document.querySelector('.myImg').src = './img/BooSign.png'
+const pumpkin = document.querySelector('.myImg').src = './img/Pumpkin3.png'
+const swamp = document.querySelector('.myImg').src = './img/swamp.png'
+const findpumpkin = document.querySelector('.myImg').src = './img/findpumpkin.png'
 
 const spriteStandRight = document.querySelector('.myImg').src = './img/Owlet_Monster_Idle_4.png'
 const spriteRunRight = document.querySelector('.myImg').src = './img/Owlet_Monster_Walk_6.png'
@@ -16,7 +20,7 @@ class Player {
     constructor() { // Sets all the properties associated with player
         this.speed = 10
         this.position = {
-            x: 100,
+            x: 30,
             y: 100
         }
         this.velocity = { // This gives gravity
@@ -132,44 +136,36 @@ function init() {
     player = new Player() 
     platforms = [
         new Platform({ x: 0, y: 470, image: platformImage}), // Sets up first platform
-        new Platform({ x: platformImage.width * 2 + 300, y: 100, image: platformImage}),
-        new Platform({ x: platformImage.width * 3 + 500, y: 200, image: platformImage}),
-        new Platform({ x: platformImage.width * 4 + 300, y: 600, image: platformImage}),
-        new Platform({ x: platformImage.width * 5 + 200, y: 300, image: platformImage}),
-        new Platform({ x: platformImage.width * 8 + 100, y: 200, image: platformImage },
-
-    )]
+        new Platform({ x: 700, y: -300, image: platformImage}),
+        new Platform({ x: 1500, y: 300, image: platformImage}),
+        new Platform({ x: 2000, y: 200, image: platformImage}),
+        new Platform({ x: 2700, y: -250, image: platformImage}),
+        new Platform({ x: 3500, y: 400, image: platformImage}),
+        new Platform({ x: 3990, y: -100, image: platformImage}),
+        new Platform({ x: 4500, y: 300, image: platformImage}),
+        new Platform({ x: 5200, y: -190, image: platformImage}),
+        new Platform({ x: 6000, y: 200, image: platformImage}),
+        new Platform({ x: 6700, y: -210, image: platformImage}),
+        new Platform({ x: 7200, y: 150, image: platformImage}),
+        new Platform({ x: 8000, y: 300, image: platformImage}),
+        new Platform({ x: 8700, y: -200, image: platformImage}),
+        new Platform({ x: 9100, y: -250, image: platformImage}),
+        new Platform({ x: 9900, y: 200, image: platformImage}),
+        new Platform({ x: 11000, y: 400, image: platformImage})
+    ]
 
     genericObjects = [
-        new GenericObject({
-            x: 0,
-            y: 0,
-            image: createImage(background) // Extra backgrounds for longer map
-        }),
-        new GenericObject({
-            x: 1800,
-            y: 0,
-            image: createImage(background)
-        }),
-        new GenericObject({
-            x: 3600,
-            y: 0,
-            image: createImage(background)
-        }),
-        new GenericObject({
-            x: 5400,
-            y: 0,
-            image: createImage(background)
-        }),
-        new GenericObject({
-            x: 7200,
-            y: 0,
-            image: createImage(background)
-        }),
-        new GenericObject({
-            x: 50,
-            y: 100,
-            image: createImage(ghosts)
+        new GenericObject({ x: 0, y: 0, image: createImage(background)}),
+        new GenericObject({ x: 1800, y: 0, image: createImage(background)}),
+        new GenericObject({ x: 3600, y: 0, image: createImage(background)}),
+        new GenericObject({ x: 5400, y: 0, image: createImage(background)}),
+        new GenericObject({ x: 7200, y: 0, image: createImage(background)}),
+        new GenericObject({ x: 50, y: 100, image: createImage(spider)}),
+        new GenericObject({ x: 1200, y: 245, image: createImage(boo)}),
+        new GenericObject({ x: 5000, y: 300, image: createImage(boo)}),
+        new GenericObject({ x: 7500, y: 200, image: createImage(boo)}),
+        new GenericObject({ x: 7650, y: 370, image: createImage(pumpkin)}),
+        new GenericObject({ x: 200, y: 300, image: createImage(findpumpkin),
         })
     ]
 
@@ -241,12 +237,15 @@ platforms.forEach((platform) => {
     })
 
 // Win condition
-    if (scrollOffset > 2000) {
+    if (scrollOffset > 11000) {
         console.log('You win!')
+        alert('You Win!')
+        init()
     }
 
 // Lose condition
 if (player.position.y > canvas.height) {
+    alert('Try again!')
     init()
 }
 }
