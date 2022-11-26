@@ -1,10 +1,17 @@
+
+// BUGS INCLUDE... 
+// not displaying character moving left --> remove left function (FINISHED)
+// character moves through black barriers --> fix collision detection for x coordinates
+// character restart causes character to fly off --> add key up for right key???
+
+
 const background = document.querySelector('.myImg').src = './img/4_game_background.png'
 const platform = document.querySelector('.myImg').src = './img/platform.png'
 const spider = document.querySelector('.myImg').src = './img/Spider2.png'
 const boo = document.querySelector('.myImg').src = './img/BooSign.png'
 const pumpkin = document.querySelector('.myImg').src = './img/Pumpkin3.png'
-const swamp = document.querySelector('.myImg').src = './img/swamp.png'
 const findpumpkin = document.querySelector('.myImg').src = './img/findpumpkin.png'
+const sparkle = document.querySelector('.myImg').src = './img/sparkle.png'
 
 const spriteStandRight = document.querySelector('.myImg').src = './img/Owlet_Monster_Idle_4.png'
 const spriteRunRight = document.querySelector('.myImg').src = './img/Owlet_Monster_Walk_6.png'
@@ -23,7 +30,7 @@ class Player {
             x: 30,
             y: 100
         }
-        this.velocity = { // This gives gravity
+        this.velocity = { // Gives gravity
             x: 0,
             y: 0
         }
@@ -46,7 +53,7 @@ class Player {
     draw() {
         c.drawImage(
             this.currentSprite,
-            32 * this.frames, // Adds Idle bouncing (too fast)
+            32 * this.frames, // Adds Idle bouncing (but too fast)
             0,
             32, // Adds player width from image
             32, // Adds player height from image
@@ -60,7 +67,7 @@ class Player {
         this.frames++
         if (this.frames > 1 && this.currentSprite === 
             this.sprites.stand.right) 
-            this.frames = 0 // Adds Idle bouncing (too fast) pt.2
+            this.frames = 0 // Adds Idle bouncing (but too fast) pt.2
         else if (this.frames > 4 && this.currentSprite === 
             this.sprites.run.right)
             this.frames = 0
@@ -114,7 +121,6 @@ function createImage(imageSrc) { // This code allows creation for new images rat
 }
 
 let platformImage = createImage(platform)
-
     let player = new Player() 
     let platforms = []
     let genericObjects = []
@@ -164,9 +170,9 @@ function init() {
         new GenericObject({ x: 1200, y: 245, image: createImage(boo)}),
         new GenericObject({ x: 5000, y: 300, image: createImage(boo)}),
         new GenericObject({ x: 7500, y: 200, image: createImage(boo)}),
+        new GenericObject({ x: 7450, y: 150, image: createImage(sparkle)}),
         new GenericObject({ x: 7650, y: 370, image: createImage(pumpkin)}),
-        new GenericObject({ x: 200, y: 300, image: createImage(findpumpkin),
-        })
+        new GenericObject({ x: 200, y: 300, image: createImage(findpumpkin)})
     ]
 
     scrollOffset = 0
@@ -181,7 +187,6 @@ function animate() {
 genericObjects.forEach(genericObject => {
     genericObject.draw()
 })
-
     platforms.forEach((platform) => {
         platform.draw()
     })
@@ -220,32 +225,31 @@ genericObjects.forEach(genericObject => {
 // Platform collision detection
 platforms.forEach((platform) => {
     if ( 
-        player.position.y + player.height <= platform.position.y && 
-        player.position.y + 
-        player.height + 
-        player.velocity.y >= 
-        platform.position.y && 
-        player.position.x + // Allows falling on left side
-        player.width >= 
-        platform.position.x &&
-        player.position.x <= 
-        platform.position.x + // Allows falling on right side
-        platform.width
+        player.position.y + player.height <= 
+        platform.position.y && player.position.y + player.height + player.velocity.y >= 
+        platform.position.y && player.position.x + player.width >= // Allows falling on left side
+        platform.position.x && player.position.x <= // Allows falling on right side
+        platform.position.x + platform.width
     ){
     player.velocity.y = 0
     }
+    // if (
+    //     player.position.y + player.height <=
+    //     platform.position.x && player.position.y + player.height + player.velocity.x >=
+    //     platform.position.x && player.position.x + player.width >=
+    //     platform.position. // TRYING TO CREATE X COLLISION DETECTION
+    // )
     })
 
 // Win condition
     if (scrollOffset > 11000) {
-        console.log('You win!')
         alert('You Win!')
         init()
+        
     }
 
 // Lose condition
 if (player.position.y > canvas.height) {
-    alert('Try again!')
     init()
 }
 }
@@ -254,12 +258,12 @@ init()
 animate()
 
 addEventListener('keydown', ({ keyCode }) => { // This creates character movement
-    // console.log(keyCode)
     switch (keyCode) {
-        case 65:
-            console.log('left')
-            keys.left.pressed = true
-            break
+        // DISABLED LEFT KEY
+        // case 65:
+        //     console.log('left')
+        //     keys.left.pressed = true
+        //     break
 
         case 83:
             console.log('down')
