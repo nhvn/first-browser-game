@@ -1,23 +1,16 @@
-// BUGS INCLUDE...
-// not displaying character moving left --> remove left function (FINISHED)
-// character moves through black barriers --> fix collision detection for x coordinates
-// character restart causes character to fly off --> add key up for right key???
+// Reset causes character to fly off --> add key up for right key???
 // FOR MAC ONLY. Numerical values must be changed for Windows to behave apropriately (not sure why)
 
-const background = (document.querySelector(".myImg").src =
-  "./img/4_game_background.png");
+const background = (document.querySelector(".myImg").src = "./img/4_game_background.png");
 const platform = (document.querySelector(".myImg").src = "./img/platform.png");
 const spider = (document.querySelector(".myImg").src = "./img/Spider2.png");
 const boo = (document.querySelector(".myImg").src = "./img/BooSign.png");
 const pumpkin = (document.querySelector(".myImg").src = "./img/Pumpkin3.png");
-const findpumpkin = (document.querySelector(".myImg").src =
-  "./img/findpumpkin.png");
+const findpumpkin = (document.querySelector(".myImg").src = "./img/findpumpkin.png");
 const sparkle = (document.querySelector(".myImg").src = "./img/sparkle.png");
 
-const spriteStandRight = (document.querySelector(".myImg").src =
-  "./img/Owlet_Monster_Idle_4.png");
-const spriteRunRight = (document.querySelector(".myImg").src =
-  "./img/Owlet_Monster_Walk_6.png");
+const spriteStandRight = (document.querySelector(".myImg").src = "./img/Owlet_Monster_Idle_4.png");
+const spriteRunRight = (document.querySelector(".myImg").src = "./img/Owlet_Monster_Walk_6.png");
 
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
@@ -30,9 +23,9 @@ class Player {
   constructor() {
     // Sets all the properties associated with player
     this.speed = 10;
-    this.position = {
+    this.position = { // Starting position
       x: 30,
-      y: 100,
+      y: 420,
     };
     this.velocity = {
       // Gives gravity
@@ -78,8 +71,7 @@ class Player {
     this.draw();
     this.position.y += this.velocity.y; // These 2 are used to be added to for control movement
     this.position.x += this.velocity.x;
-    if (this.position.y + this.height + this.velocity.y <= canvas.height)
-      // This adds a ground to stop velocity
+    if (this.position.y + this.height + this.velocity.y <= canvas.height) // This adds a ground to stop velocity
       this.velocity.y += gravity; // This adds velocity to gravity
   }
 }
@@ -228,32 +220,35 @@ function animate() {
   // Platform collision detection
   platforms.forEach((platform) => {
     if (
-      player.position.y + player.height <= platform.position.y &&
-      player.position.y + player.height + player.velocity.y >=
-        platform.position.y &&
-      player.position.x + player.width >= // Allows falling on left side
-        platform.position.x &&
-      player.position.x <= // Allows falling on right side
-        platform.position.x + platform.width
+      player.position.y + player.height <= platform.position.y && // Allows to stay onto platform 
+      player.position.y + player.height + player.velocity.y >= platform.position.y && // Allows to jump over platform then land
+      player.position.x + player.width >= platform.position.x && // Allows falling left
+      player.position.x <= platform.position.x + platform.width // Allows falling right
     ) {
-      player.velocity.y = 0;
+      player.velocity.y = 0; // Allows you you to stand on platforms
     }
-    // if (
-    //     player.position.y + player.height <=
-    //     platform.position.x && player.position.y + player.height + player.velocity.x >=
-    //     platform.position.x && player.position.x + player.width >=
-    //     platform.position. // TRYING TO CREATE X COLLISION DETECTION
-    // )
-  });
+    else if ( // Successfully created horizontal barriers which took about 10+ hours of trial and error
+      player.position.x + player.width >= platform.position.x &&
+      player.position.x <= platform.position.x + platform.width &&
+      player.position.y + player.height >= platform.position.y &&
+      player.position.y + player.height <= platform.position.y + platform.height
+      ) {
+      player.velocity.x = 0;
+      init()
+    }
+  })
 
   // Win condition
   if (scrollOffset > 11000) {
     alert("You Win!");
-    init();
+    init()
   }
 
   // Lose condition
-  if (player.position.y > canvas.height) {
+  if (
+    player.position.y > canvas.height ||
+    player.position.y < -50
+    ) {
     init();
   }
 }
@@ -261,19 +256,9 @@ function animate() {
 init();
 animate();
 
-addEventListener("keydown", ({ keyCode }) => {
   // This creates character movement
+addEventListener("keydown", ({ keyCode }) => {
   switch (keyCode) {
-    // DISABLED LEFT KEY
-    // case 65:
-    //     console.log('left')
-    //     keys.left.pressed = true
-    //     break
-
-    case 83:
-      console.log("down");
-      break;
-
     case 68:
       console.log("right");
       keys.right.pressed = true;
@@ -289,17 +274,7 @@ addEventListener("keydown", ({ keyCode }) => {
 
 addEventListener("keyup", ({ keyCode }) => {
   // This allows endless gravity to stop
-  // console.log(keyCode)
   switch (keyCode) {
-    case 65:
-      console.log("left");
-      keys.left.pressed = false;
-      break;
-
-    case 83:
-      console.log("down");
-      break;
-
     case 68:
       console.log("right");
       keys.right.pressed = false;
