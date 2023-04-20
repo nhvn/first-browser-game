@@ -15,14 +15,14 @@ const spriteRunRight = (document.querySelector(".myImg").src = "./img/Owlet_Mons
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
-canvas.width = screen.width; // Sets window width from left to right
-canvas.height = 700; // Sets window height from top to bottom
+canvas.width = 1500; // Sets window width from left to right
+canvas.height = 1000; // Sets window height from top to bottom
 
-const gravity = 0.5;
+const gravity = 0.1; // Sets gravity but mixes with jump on line 270 and 286
 class Player {
   constructor() {
     // Sets all the properties associated with player
-    this.speed = 10;
+    this.speed = 5;
     this.position = { // Starting position
       x: 30,
       y: 420,
@@ -65,7 +65,7 @@ class Player {
   update() {
     this.frames++;
     if (this.frames > 1 && this.currentSprite === this.sprites.stand.right)
-      this.frames = 0; // Adds Idle bouncing (but too fast) pt.2
+      this.frames = 2; // Adds Idle bouncing (but too fast) pt.2
     else if (this.frames > 4 && this.currentSprite === this.sprites.run.right)
       this.frames = 0;
     this.draw();
@@ -170,8 +170,11 @@ function init() {
     new GenericObject({ x: 7650, y: 370, image: createImage(pumpkin) }),
     new GenericObject({ x: 200, y: 300, image: createImage(findpumpkin) }),
   ];
+  
 
   scrollOffset = 0;
+    keys.right.pressed = false;
+
 }
 
 // Allows to maintain character shape
@@ -267,7 +270,7 @@ addEventListener("keydown", ({ keyCode }) => {
 
     case 87:
       console.log("up");
-      player.velocity.y -= 1;
+      player.velocity.y -= 0.5; // How high character jumps
       break;
   }
 });
@@ -283,7 +286,7 @@ addEventListener("keyup", ({ keyCode }) => {
 
     case 87:
       console.log("up");
-      player.velocity.y -= 10;
+      player.velocity.y -= 5;
       break;
   }
 });

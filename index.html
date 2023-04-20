@@ -1,12 +1,23 @@
-<style>
-    body {
-        margin: 0; /* This is to leave no margins or 'gaps' */
-        background-color: black;
-        display: flex;
-        align-items: center;
-    }
-</style>
-<canvas></canvas>
-<img class ="myImg"/>
-<script src="index.js" type="module"></script> 
-<!-- 'Type module' means it's an attribute to a JS module -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Game Title</title>
+    <style>
+        body {
+            margin: 0; /* This is to leave no margins or 'gaps' */
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <canvas></canvas>
+    <img class="myImg" style="display:none;"/>
+    <script src="index.js" type="module"></script>
+</body>
+</html>
