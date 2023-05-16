@@ -1,6 +1,4 @@
-// Reset causes character to fly off --> add key up for right key???
-// FOR MAC ONLY. Numerical values must be changed for Windows to behave apropriately (not sure why)
-
+// Background
 const background = (document.querySelector(".myImg").src = "./img/4_game_background.png");
 const platform = (document.querySelector(".myImg").src = "./img/platform.png");
 const spider = (document.querySelector(".myImg").src = "./img/Spider2.png");
@@ -8,42 +6,45 @@ const boo = (document.querySelector(".myImg").src = "./img/BooSign.png");
 const pumpkin = (document.querySelector(".myImg").src = "./img/Pumpkin3.png");
 const findpumpkin = (document.querySelector(".myImg").src = "./img/findpumpkin.png");
 const sparkle = (document.querySelector(".myImg").src = "./img/sparkle.png");
-
-const spriteStandRight = (document.querySelector(".myImg").src = "./img/Owlet_Monster_Idle_4.png");
-const spriteRunRight = (document.querySelector(".myImg").src = "./img/Owlet_Monster_Walk_6.png");
-
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 
-canvas.width = 1500; // Sets window width from left to right
-canvas.height = 1000; // Sets window height from top to bottom
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-const gravity = 0.1; // Sets gravity but mixes with jump on line 270 and 286
+// Sprites
+const spriteStandRight = (document.querySelector(".myImg").src = "./img/idleRight.png");
+const spriteRunRight = (document.querySelector(".myImg").src = "./img/walkRight.png");
+const spriteRunLeft = (document.querySelector(".myImg").src = "./img/walkLeft.png");
+const spriteStandLeft = (document.querySelector(".myImg").src = "./img/idleRight.png");
+
+const gravity = 0.2; // Gravity (similar to line 270 and 286)
 class Player {
   constructor() {
-    // Sets all the properties associated with player
+    // Properties associated with player
     this.speed = 5;
     this.position = { // Starting position
       x: 30,
       y: 420,
     };
     this.velocity = {
-      // Gives gravity
       x: 0,
       y: 0,
     };
     this.width = 50;
     this.height = 50;
-
-    this.image = createImage(spriteStandRight);
     this.frames = 0;
+    this.frameDelay = 10; // update frames every 10 game updates
+    this.frameDelayCount = 0; // counter for frame delay
     this.sprites = {
       stand: {
         right: createImage(spriteStandRight),
+        left: createImage(spriteStandLeft)
       },
       run: {
         right: createImage(spriteRunRight),
-      },
+        left: createImage(spriteRunLeft)
+      }
     };
     this.currentSprite = this.sprites.stand.right;
   }
@@ -63,17 +64,26 @@ class Player {
   }
 
   update() {
-    this.frames++;
+    this.frameDelayCount++; // increment frameDelayCount
+    if (this.frameDelayCount >= this.frameDelay) { 
+      // reset frameDelayCount
+      this.frameDelayCount = 0;
+      // increment frames
+      this.frames++;
+    }
+  
     if (this.frames > 1 && this.currentSprite === this.sprites.stand.right)
-      this.frames = 2; // Adds Idle bouncing (but too fast) pt.2
+      this.frames = 0; // Adds Idle bouncing (but too fast) pt.2
     else if (this.frames > 4 && this.currentSprite === this.sprites.run.right)
       this.frames = 0;
+  
     this.draw();
     this.position.y += this.velocity.y; // These 2 are used to be added to for control movement
     this.position.x += this.velocity.x;
     if (this.position.y + this.height + this.velocity.y <= canvas.height) // This adds a ground to stop velocity
       this.velocity.y += gravity; // This adds velocity to gravity
   }
+  
 }
 
 class Platform {
