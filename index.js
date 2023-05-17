@@ -10,12 +10,15 @@ const canvas = document.querySelector("canvas");
 const chaser = (document.querySelector(".myImg").src = "./img/chaser.png");
 const modal = document.getElementById("modal");
 const retryButton = document.getElementById("retry-button");
+const winModal = document.getElementById("win-modal");
+const winButton = document.getElementById("win-button");
 const c = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
 canvas.height = 1000;
 
 modal.style.display = "none";
+winModal.style.display = "none";
 
 
 // SPRITE
@@ -83,6 +86,11 @@ class Player {
       this.frames = 0; 
     else if (this.frames > 4 && this.currentSprite === this.sprites.run.right)
       this.frames = 0;
+    else if (this.frames > 1 && this.currentSprite === this.sprites.stand.left)
+      this.frames = 0;
+    else if (this.frames > 4 && this.currentSprite === this.sprites.run.left)
+      this.frames = 0;
+
   
     this.draw();
     this.position.y += this.velocity.y; // Added to for control movement
@@ -184,7 +192,7 @@ function init() {
     new GenericObject({ x: 7500, y: 200, image: createImage(boo) }),
     new GenericObject({ x: 7450, y: 150, image: createImage(sparkle) }),
     new GenericObject({ x: 7650, y: 370, image: createImage(pumpkin) }),
-    new GenericObject({ x: 200, y: 300, image: createImage(findpumpkin) }),
+    new GenericObject({ x: 450, y: 300, image: createImage(findpumpkin) }),
   ];
 
   // CHASER 1
@@ -231,10 +239,10 @@ let movingObject = new MovingObject({
   speed: 1,
 });
 
-// ALLOWS TO MAINTAIN SHAPE
+// ANIMATION
 function animate() {
   // Check if the modal is visible
-  if (modal.style.display === "block") {
+  if (modal.style.display === "block" || winModal.style.display === "block") {
     return; // Return early to stop updating the game state
   }
   requestAnimationFrame(animate);
@@ -255,9 +263,12 @@ function animate() {
   // CHASER 3
   if (keys.right.pressed) {
     movingObject.position.x -= player.speed;
-  } else if (keys.left.pressed && scrollOffset > 0) {
-    movingObject.position.x -= player.speed;
-  }
+} else if (keys.left.pressed && scrollOffset > 0) {
+    // Do not update the chaser's position here
+} else if (keys.left.pressed) {
+    movingObject.position.x += player.speed;
+}
+
 
   if (keys.right.pressed && player.position.x < 400) {
     player.velocity.x = player.speed;
@@ -286,9 +297,8 @@ function animate() {
         genericObject.position.x += player.speed * 0.66;
       });
     }
-    if (scrollOffset > 11000) {
-      alert("You Win!");
-      init();
+    if (scrollOffset > 10200) {
+      winModal.style.display = "block";
     }
   
     if (player.position.y > canvas.height || player.position.y < -50) {
@@ -328,13 +338,6 @@ function animate() {
     modal.style.display = "block"; // Show the modal
   }
 
-  // WIN CONDITION
-  if (scrollOffset > 11000) {
-    alert("You Win!");
-    init()
-  }
-
-
   // LOSE CONDITION
   if (player.position.y > canvas.height || player.position.y < -50) { // YOU LOSE
     modal.style.display = "block";
@@ -350,6 +353,13 @@ retryButton.addEventListener("click", () => {
   modal.style.display = "none";
   animate(); // Call the animate function directly
  }); 
+
+// WIN BUTTON
+winButton.addEventListener("click", () => {
+  init();
+  winModal.style.display = "none";
+  animate();
+});
 
 // CHARACTER MOVEMENT
 addEventListener("keydown", ({ keyCode }) => {
