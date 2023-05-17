@@ -1,5 +1,7 @@
 // BACKGROUND
 const background = (document.querySelector(".myImg").src = "./img/4_game_background.png");
+// const mainMenu = document.getElementById('main-menu');
+// const playGameButton = document.getElementById('play-game-button');
 const platform = (document.querySelector(".myImg").src = "./img/platform.png");
 const spider = (document.querySelector(".myImg").src = "./img/Spider2.png");
 const boo = (document.querySelector(".myImg").src = "./img/BooSign.png");
@@ -13,9 +15,19 @@ const retryButton = document.getElementById("retry-button");
 const winModal = document.getElementById("win-modal");
 const winButton = document.getElementById("win-button");
 const bgMusic = document.getElementById("bg-music");
+
+bgMusic.volume = 0.1;
 bgMusic.play();
 
-// First, create a button element and add it to the page
+// // Add an event listener to the play game button that starts the game when clicked
+// playGameButton.addEventListener('click', () => {
+//   // Hide the main menu
+//   mainMenu.style.display = 'none';
+
+//   // Start the game here
+// });
+
+// MUSIC
 const playButton = document.createElement('button');
 playButton.id = 'play-button';
 playButton.innerHTML = '<i class="fas fa-volume-up"></i>';
@@ -24,7 +36,7 @@ playButton.style.top = '10px';
 playButton.style.right = '10px';
 canvas.parentElement.appendChild(playButton);
 
-// Then, add an event listener to the button that plays/pauses the music when clicked
+// Plays/pauses the music when clicked
 playButton.addEventListener('click', () => {
   const bgMusic = document.getElementById('bg-music');
   if (bgMusic.paused) {
@@ -34,18 +46,19 @@ playButton.addEventListener('click', () => {
   }
 });
 
-// Next, create a range input element and add it to the page
+// Range input element 
 const volumeInput = document.createElement('input');
 volumeInput.type = 'range';
 volumeInput.min = '0';
 volumeInput.max = '1';
 volumeInput.step = '0.01';
+volumeInput.value = '0.5';
 volumeInput.style.position = 'absolute';
 volumeInput.style.top = '50px';
 volumeInput.style.right = '10px';
 canvas.parentElement.appendChild(volumeInput);
 
-// Then, add an event listener to the input that updates the volume when changed
+// Event listener that updates the volume when changed
 volumeInput.addEventListener('input', () => {
   const bgMusic = document.getElementById('bg-music');
   bgMusic.volume = volumeInput.value;
@@ -237,26 +250,16 @@ function init() {
 
   // CHASER 1
   movingObject = new MovingObject({
-    x: -500,  // Initial x position outside the canvas on the left
+    x: -1000,  // Initial x position outside the canvas on the left
     y: 0,     // Starting y position
     image: createImage(chaser),
     speed: 2, // Adjust the speed as needed
   });
-
-  // Play background music
-  const bgMusic = document.getElementById("bg-music");
-  bgMusic.play();
   
   scrollOffset = player.position.x - canvas.width / 2;
 
   keys.right.pressed = false;
   chaserDistance = 0;
-}
-
-// STOP MUSIC
-function stopMusic() {
-  const bgMusic = document.getElementById("bg-music");
-  bgMusic.pause();
 }
 
 // CHASER 2
