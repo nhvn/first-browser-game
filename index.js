@@ -8,10 +8,15 @@ const findpumpkin = (document.querySelector(".myImg").src = "./img/findpumpkin.p
 const sparkle = (document.querySelector(".myImg").src = "./img/sparkle.png");
 const canvas = document.querySelector("canvas");
 const chaser = (document.querySelector(".myImg").src = "./img/chaser.png");
+const modal = document.getElementById("modal");
+const retryButton = document.getElementById("retry-button");
 const c = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.height = 1000;
+
+modal.style.display = "none";
+
 
 // SPRITE
 const spriteStandRight = (document.querySelector(".myImg").src = "./img/idleRight.png");
@@ -19,14 +24,14 @@ const spriteRunRight = (document.querySelector(".myImg").src = "./img/walkRight.
 const spriteRunLeft = (document.querySelector(".myImg").src = "./img/walkLeft.png");
 const spriteStandLeft = (document.querySelector(".myImg").src = "./img/idleLeft.png");
 
-const gravity = 0.2; // Gravity (similar to line 270 and 286)
+const gravity = 0.1; // Gravity (similar to line 270 and 286)
 
 // PROPERTIES OF CHARACTER
 class Player {
   constructor() {
-    this.speed = 5;
+    this.speed = 3; // (Windows CONFIG)
     this.position = { // Starting position
-      x: 30,
+      x: 800,
       y: 420,
     };
     this.velocity = {
@@ -36,7 +41,7 @@ class Player {
     this.width = 50;
     this.height = 50;
     this.frames = 0;
-    this.frameDelay = 10; // update frames every 10 game updates
+    this.frameDelay = 20; // Higher = slower idle movement (Windows CONFIG)
     this.frameDelayCount = 0; // counter for frame delay
     this.sprites = {
       stand: {
@@ -148,6 +153,7 @@ function init() {
 
   platforms = [
     new Platform({ x: 0, y: 470, image: platformImage }), // Sets up first platform
+    new Platform({ x: 800, y: 520, image: platformImage }),
     new Platform({ x: 700, y: -300, image: platformImage }),
     new Platform({ x: 1500, y: 300, image: platformImage }),
     new Platform({ x: 2000, y: 200, image: platformImage }),
@@ -183,13 +189,14 @@ function init() {
 
   // CHASER 1
   movingObject = new MovingObject({
-    x: -100,  // Initial x position outside the canvas on the left
+    x: -500,  // Initial x position outside the canvas on the left
     y: 0,     // Starting y position
     image: createImage(chaser),
-    speed: 1, // Adjust the speed as needed
+    speed: 2, // Adjust the speed as needed
   });
   
-  scrollOffset = 0;
+  scrollOffset = player.position.x - canvas.width / 2;
+
   keys.right.pressed = false;
   chaserDistance = 0;
 }
@@ -226,6 +233,10 @@ let movingObject = new MovingObject({
 
 // ALLOWS TO MAINTAIN SHAPE
 function animate() {
+  // Check if the modal is visible
+  if (modal.style.display === "block") {
+    return; // Return early to stop updating the game state
+  }
   requestAnimationFrame(animate);
   c.fillStyle = "white";
   c.fillRect(0, 0, canvas.width, canvas.height);
@@ -281,7 +292,7 @@ function animate() {
     }
   
     if (player.position.y > canvas.height || player.position.y < -50) {
-      init();
+      modal.style.display = "block"; // Show the modal
     }
   }
 
@@ -302,7 +313,7 @@ function animate() {
       player.position.y + player.height <= platform.position.y + platform.height
       ) {
       player.velocity.x = 0;
-      init()
+      modal.style.display = "block"; // Show the modal
     }
   })
 
@@ -314,7 +325,7 @@ function animate() {
     player.position.y + player.height > movingObject.position.y
   ) {
     // collision detected!  
-    init();
+    modal.style.display = "block"; // Show the modal
   }
 
   // WIN CONDITION
@@ -323,34 +334,36 @@ function animate() {
     init()
   }
 
+
   // LOSE CONDITION
-  if (
-    player.position.y > canvas.height ||
-    player.position.y < -50
-    ) {
-    init();
+  if (player.position.y > canvas.height || player.position.y < -50) { // YOU LOSE
+    modal.style.display = "block";
   }
 }
 
 init();
 animate();
 
+// PROMPT BUTTON
+retryButton.addEventListener("click", () => {
+  init();
+  modal.style.display = "none";
+  animate(); // Call the animate function directly
+ }); 
+
 // CHARACTER MOVEMENT
 addEventListener("keydown", ({ keyCode }) => {
   switch (keyCode) {
     case 68: // d key
-      console.log("right");
       keys.right.pressed = true;
       player.currentSprite = player.sprites.run.right;
       break;
     case 65: // a key
-      console.log("left");
       keys.left.pressed = true;
       player.currentSprite = player.sprites.run.left;
       break;
     case 87: // w key
-      console.log("up");
-      player.velocity.y -= 0.5; // How high character jumps
+      player.velocity.y -= 1; // How high character jumps
       break;
   }
 });
@@ -359,19 +372,15 @@ addEventListener("keyup", ({ keyCode }) => {
   // This allows endless gravity to stop
   switch (keyCode) {
     case 68: // d key
-      console.log("right");
       keys.right.pressed = false;
       player.currentSprite = player.sprites.stand.right;
       break;
     case 65: // a key
-      console.log("left");
       keys.left.pressed = false;
       player.currentSprite = player.sprites.stand.left;
       break;
     case 87: // w key
-      console.log("up");
       player.velocity.y -= 5;
       break;
   }
 });
-

@@ -3,21 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Game Title</title>
-    <style>
-        body {
-            margin: 0; /* This is to leave no margins or 'gaps' */
-            background-color: black;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+    <title>Pumpkin Lost-te</title>
 </head>
 <body>
     <canvas></canvas>
     <img class="myImg" style="display:none;"/>
     <script src="index.js" type="module"></script>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+        <p>You lost! Click 'Retry' to play again.</p>
+        <button id="retry-button">Retry</button>
+        </div>
+    </div>
 </body>
 </html>
