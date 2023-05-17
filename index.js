@@ -7,11 +7,51 @@ const pumpkin = (document.querySelector(".myImg").src = "./img/Pumpkin3.png");
 const findpumpkin = (document.querySelector(".myImg").src = "./img/findpumpkin.png");
 const sparkle = (document.querySelector(".myImg").src = "./img/sparkle.png");
 const canvas = document.querySelector("canvas");
-const chaser = (document.querySelector(".myImg").src = "./img/chaser.png");
+const chaser = (document.querySelector(".myImg").src = "./img/chaser.jpg");
 const modal = document.getElementById("modal");
 const retryButton = document.getElementById("retry-button");
 const winModal = document.getElementById("win-modal");
 const winButton = document.getElementById("win-button");
+const bgMusic = document.getElementById("bg-music");
+bgMusic.play();
+
+// First, create a button element and add it to the page
+const playButton = document.createElement('button');
+playButton.id = 'play-button';
+playButton.innerHTML = '<i class="fas fa-volume-up"></i>';
+playButton.style.position = 'absolute';
+playButton.style.top = '10px';
+playButton.style.right = '10px';
+canvas.parentElement.appendChild(playButton);
+
+// Then, add an event listener to the button that plays/pauses the music when clicked
+playButton.addEventListener('click', () => {
+  const bgMusic = document.getElementById('bg-music');
+  if (bgMusic.paused) {
+    bgMusic.play();
+  } else {
+    bgMusic.pause();
+  }
+});
+
+// Next, create a range input element and add it to the page
+const volumeInput = document.createElement('input');
+volumeInput.type = 'range';
+volumeInput.min = '0';
+volumeInput.max = '1';
+volumeInput.step = '0.01';
+volumeInput.style.position = 'absolute';
+volumeInput.style.top = '50px';
+volumeInput.style.right = '10px';
+canvas.parentElement.appendChild(volumeInput);
+
+// Then, add an event listener to the input that updates the volume when changed
+volumeInput.addEventListener('input', () => {
+  const bgMusic = document.getElementById('bg-music');
+  bgMusic.volume = volumeInput.value;
+});
+
+
 const c = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
@@ -202,11 +242,21 @@ function init() {
     image: createImage(chaser),
     speed: 2, // Adjust the speed as needed
   });
+
+  // Play background music
+  const bgMusic = document.getElementById("bg-music");
+  bgMusic.play();
   
   scrollOffset = player.position.x - canvas.width / 2;
 
   keys.right.pressed = false;
   chaserDistance = 0;
+}
+
+// STOP MUSIC
+function stopMusic() {
+  const bgMusic = document.getElementById("bg-music");
+  bgMusic.pause();
 }
 
 // CHASER 2

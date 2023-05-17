@@ -4,23 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <title>Pumpkin Lost-te</title>
 </head>
 <body>
-    <canvas></canvas>
-    <img class="myImg" style="display:none;"/>
-    <script src="index.js" type="module"></script>
-    <div id="modal" class="modal">
-        <div class="modal-content">
-        <p>You lost! Click 'Retry' to play again.</p>
-        <button id="retry-button">Retry</button>
-        </div>
-    </div>
-    <div id="win-modal" class="modal">
-        <div class="modal-content">
-          <h1>You Win!</h1>
-          <button id="win-button">Play Again</button>
-        </div>
+  <audio id="bg-music" src="audio/background-music.mp3" loop></audio>
+  <canvas></canvas>
+  <img class="myImg" style="display:none;"/>
+  <script src="index.js" type="module"></script>
+  <div id="modal" class="modal">
+      <div class="modal-content">
+      <p>You lost! Click 'Retry' to play again.</p>
+      <button id="retry-button">Retry</button>
       </div>
+  </div>
+  <div id="win-modal" class="modal">
+      <div class="modal-content">
+        <h1>You Win!</h1>
+        <button id="win-button">Play Again</button>
+      </div>
+    </div>
 </body>
 </html>
