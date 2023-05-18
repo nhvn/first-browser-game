@@ -245,7 +245,7 @@ function init() {
     new GenericObject({ x: 7500, y: 200, image: createImage(boo) }),
     new GenericObject({ x: 7450, y: 150, image: createImage(sparkle) }),
     new GenericObject({ x: 7650, y: 370, image: createImage(pumpkin) }),
-    new GenericObject({ x: 450, y: 300, image: createImage(findpumpkin) }),
+    new GenericObject({ x: 400, y: 300, image: createImage(findpumpkin) }),
   ];
 
   // CHASER 1

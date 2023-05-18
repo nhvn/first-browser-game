@@ -60,8 +60,36 @@ canvas {
   top: 10px;
   right: 10px;
   color: white;
-  background-color: #505050;
+  background-color: #50505000;
+  font-size: 25px;
 }
 
+.github-link {
+  position: fixed;
+  top: 10px;
+  left: 20px;
+  color: white;
+  font-size: 3em;
+}
+
+#prompt {
+  position: fixed;
+  top: 10px;
+  width: 50%; /* Set a width for the element */
+  text-align: center;
+  color: orange;
+  font-size: 3em;
+  font-family: cursive;
+}
+
+#credits {
+  position: fixed;
+  top: 70px;
+  width: 50%; /* Set a width for the element */
+  text-align: center;
+  color: rgb(255, 255, 255);
+  font-size: 1em;
+  font-family: cursive;
+}
   
   
