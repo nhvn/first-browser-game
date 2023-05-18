@@ -297,11 +297,6 @@ function init() {
 			y: 200,
 			image: platformImage
 		}),
-		new Platform({
-			x: 11000,
-			y: 400,
-			image: platformImage
-		}),
 	];
 
 	genericObjects = [
