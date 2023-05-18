@@ -70,13 +70,9 @@ canvas {
 }
 
 #credits {
-  /* position: fixed;
-  top: 70px;
-  width: 50%; 
-  text-align: center; */
   position: fixed;
-  top: 22px;
-  left: 67px;
+  top: 2%;
+  left: 5%;
   color: rgb(255, 255, 255);
   font-size: 20px;
   font-family: cursive;

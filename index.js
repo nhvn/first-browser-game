@@ -1,12 +1,3 @@
-if (window.navigator.platform.indexOf('Win') > -1) {
-	// User is on a Windows computer
-	// Run the game as normal
-  } else {
-	// User is not on a Windows computer
-	alert('Sorry, this game is only supported on Windows computers.');
-  }  
-
-
 // BACKGROUND
 const background = (document.querySelector(".myImg").src = "./img/4_game_background.png");
 const platform = (document.querySelector(".myImg").src = "./img/platform.png");
@@ -83,7 +74,7 @@ const gravity = 0.1; // Gravity (similar to line 270 and 286)
 // PROPERTIES OF CHARACTER
 class Player {
 	constructor() {
-		this.speed = 6; // (Windows = 3, Mac = 6)
+		this.speed = 3; // (Windows = 3, Mac = 6)
 		this.position = { // Starting position
 			x: 800,
 			y: 420,
@@ -95,8 +86,8 @@ class Player {
 		this.width = 50;
 		this.height = 50;
 		this.frames = 0; // (Windows = 0, Mac = 1)
-		this.frameDelay = 10; // Higher = slower (Windows 20, Mac = 10)
-		this.frameDelayCount = 5; // (Windows = 0, Mac = 5)
+		this.frameDelay = 20; // Higher = slower (Windows 20, Mac = 10)
+		this.frameDelayCount = 0; // (Windows = 0, Mac = 5)
 		this.sprites = {
 			stand: {
 				right: createImage(spriteStandRight),
@@ -546,8 +537,15 @@ winButton.addEventListener("click", () => {
 	animate();
 });
 
-init();
-animate();
+if (window.navigator.platform.indexOf('Win') > -1) {
+	// User is on a Windows computer
+	// Run the game as normal
+	init();
+	animate();
+  } else {
+	// User is not on a Windows computer
+	alert('Sorry, this game is only supported on Windows computers.');
+  }  
 
 // CHARACTER MOVEMENT
 addEventListener("keydown", ({
