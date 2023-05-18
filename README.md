@@ -12,7 +12,10 @@ The game has just been deployed so as long as you can access the internet and cl
 
 ## Known Issues
 
-- The character sometimes fall through the platforms at the start.
+- Due to not all objects being loaded immediately on first load, issues may include: 
+    - The character sometimes fall through the platforms at the start due to unloaded objects
+    - Chaser may be invisible on first load
+    - Chaser may not collision detect with character on first load
 
 ## Future Improvements
 
