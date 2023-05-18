@@ -472,7 +472,7 @@ function animate() {
 				genericObject.position.x += player.speed * 0.66;
 			});
 		}
-		if (scrollOffset > 10200) {
+		if (scrollOffset > 10600) {
 			winModal.style.display = "block";
 		}
 
