@@ -57,10 +57,8 @@ canvas {
 
 #play-button {
   position: fixed;
-  top: 10px;
-  right: 10px;
   color: white;
-  background-color: #50505000;
+  background-color: #ff000000;
   font-size: 25px;
 }
 
@@ -69,7 +67,7 @@ canvas {
   top: 10px;
   left: 20px;
   color: white;
-  font-size: 3em;
+  font-size: 38px;
 }
 
 #prompt {
@@ -88,8 +86,8 @@ canvas {
   width: 50%; /* Set a width for the element */
   text-align: center;
   color: rgb(255, 255, 255);
-  font-size: 1em;
-  font-family: cursive;
+  font-size: 13px;
+  font-family:cursive;
 }
   
   
