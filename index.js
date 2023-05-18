@@ -523,6 +523,16 @@ function animate() {
 	}
 }
 
+if (window.navigator.platform.indexOf('Mac') === -1) {
+	// User is not on a Mac computer
+	// Run the game as normal
+	init();
+	animate();
+} else {
+	// User is on a Mac computer
+	alert('Sorry, this game is only supported on Windows computers.');
+}
+
 // PROMPT BUTTON
 retryButton.addEventListener("click", () => {
 	init();
@@ -536,16 +546,6 @@ winButton.addEventListener("click", () => {
 	winModal.style.display = "none";
 	animate();
 });
-
-if (window.navigator.platform.indexOf('Win') > -1) {
-	// User is on a Windows computer
-	// Run the game as normal
-	init();
-	animate();
-  } else {
-	// User is not on a Windows computer
-	alert('Sorry, this game is only supported on Windows computers.');
-  }  
 
 // CHARACTER MOVEMENT
 addEventListener("keydown", ({
