@@ -1,3 +1,12 @@
+if (/Mobi|Android/i.test(navigator.userAgent)) {
+  // User is on a mobile device
+  alert('Sorry, this game is not supported on mobile devices.');
+} else {
+  // User is not on a mobile device
+  // Run the game as normal
+}
+
+
 // BACKGROUND
 const background = (document.querySelector(".myImg").src = "./img/4_game_background.png");
 const platform = (document.querySelector(".myImg").src = "./img/platform.png");

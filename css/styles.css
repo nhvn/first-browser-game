@@ -70,11 +70,14 @@ canvas {
 }
 
 #credits {
-  position: fixed;
+  /* position: fixed;
   top: 70px;
-  width: 50%; /* Set a width for the element */
-  text-align: center;
+  width: 50%; 
+  text-align: center; */
+  position: fixed;
+  top: 22px;
+  left: 67px;
   color: rgb(255, 255, 255);
-  font-size: 13px;
+  font-size: 20px;
   font-family: cursive;
 }
