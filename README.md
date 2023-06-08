@@ -8,7 +8,7 @@ This project is my first milestone project from my bootcamp program, and I am pr
 
 ## Getting Started
 
-The game has just been deployed so as long as you can access the internet and click on the link, the game will be operationa. 
+The game has just been deployed so as long as you can access the internet and click on the link, the game will be operations. 
 
 ## Known Issues
 
